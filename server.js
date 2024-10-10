@@ -1,8 +1,10 @@
+require('dotenv').config();
+
 // Express server to fetch FormCrafts responses
 const express = require('express');
 const axios = require('axios');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 app.use(express.json());
 
@@ -11,7 +13,7 @@ app.get('/api/formcrafts/responses', async (req, res) => {
   try {
     const response = await axios.get('https://api.formcrafts.com/v2/forms/cf912b7f/responses', {
       headers: {
-        'Authorization': 'Bearer fc_sgx8o9zhog52yabderq3xov16',
+        'Authorization': `Bearer ${process.env.FORMCRAFTS_API_KEY}`,
         'Content-Type': 'application/json'
       }
     });
@@ -30,7 +32,7 @@ app.listen(port, () => {
 const corsAnywhere = require('cors-anywhere');
 
 const host = process.env.HOST || '0.0.0.0';
-const corsPort = process.env.CORS_PORT || 8080;
+const corsPort = process.env.CORS_PORT || 8081;
 
 corsAnywhere.createServer({
   originWhitelist: ['https://your-production-domain.com'], // Allow only your domain
